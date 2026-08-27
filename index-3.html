@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>نظام إدارة عيادة الأسنان</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,Tahoma,sans-serif;background:#f4f7fb;color:#172033}
+.app{display:flex;min-height:100vh}.side{width:245px;background:#102a43;color:#fff;padding:22px 15px}.logo{font-size:20px;font-weight:700;margin-bottom:25px;text-align:center}.nav button{display:block;width:100%;padding:12px;margin:7px 0;border:0;border-radius:10px;background:transparent;color:#dbeafe;text-align:right;font-size:15px;cursor:pointer}.nav button.active,.nav button:hover{background:#1f4f78;color:#fff}.main{flex:1;padding:25px}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px}.top h1{margin:0;font-size:25px}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:15px}.card{background:#fff;border-radius:15px;padding:20px;box-shadow:0 3px 14px #0000000d}.stat b{display:block;font-size:28px;margin-top:10px}.section{margin-top:20px}.section h2{font-size:19px}.table{width:100%;border-collapse:collapse;background:#fff;border-radius:12px;overflow:hidden}.table th,.table td{padding:13px;border-bottom:1px solid #edf1f5;text-align:right}.badge{padding:5px 9px;border-radius:20px;background:#e8f5e9;color:#257a3e;font-size:12px}.actions button{border:0;border-radius:8px;padding:9px 13px;background:#1677b8;color:#fff;cursor:pointer}.patients{display:none}.search{padding:12px;width:100%;border:1px solid #d8e0e8;border-radius:10px;margin-bottom:15px;font-size:15px}
+@media(max-width:850px){.side{width:75px}.logo{font-size:0}.logo:after{content:"🦷";font-size:25px}.nav button{font-size:0;text-align:center}.nav button:before{font-size:20px}.grid{grid-template-columns:repeat(2,1fr)}.main{padding:15px}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="side">
+<div class="logo">🦷 عيادتي للأسنان</div>
+<div class="nav">
+<button class="active" onclick="show('dashboard',this)">🏠 الرئيسية</button>
+<button onclick="show('patients',this)">👥 المرضى</button>
+<button onclick="alert('قسم المواعيد — سيتم تطويره في المرحلة التالية')">📅 المواعيد</button>
+<button onclick="alert('قسم الجلسات — سيتم تطويره في المرحلة التالية')">🦷 الجلسات</button>
+<button onclick="alert('خطط العلاج — سيتم تطويرها في المرحلة التالية')">📋 خطط العلاج</button>
+<button onclick="alert('العلاجات والأسعار — سيتم تطويرها في المرحلة التالية')">💊 العلاجات والأسعار</button>
+<button onclick="alert('المدفوعات — سيتم تطويرها في المرحلة التالية')">💳 المدفوعات</button>
+<button onclick="alert('الخزنة — سيتم تطويرها في المرحلة التالية')">💰 الخزنة</button>
+<button onclick="alert('المصروفات — سيتم تطويرها في المرحلة التالية')">💸 المصروفات</button>
+<button onclick="alert('التقارير — سيتم تطويرها في المرحلة التالية')">📊 التقارير</button>
+<button onclick="alert('المستخدمون والصلاحيات — سيتم تطويرها في المرحلة التالية')">👤 المستخدمون</button>
+</div>
+</aside>
+<main class="main">
+<section id="dashboard">
+<div class="top"><h1>لوحة التحكم</h1><span>نظام إدارة عيادة الأسنان</span></div>
+<div class="grid">
+<div class="card stat">👥 المرضى<b>128</b></div>
+<div class="card stat">📅 مواعيد اليوم<b>12</b></div>
+<div class="card stat">💰 إيرادات اليوم<b>8,450 ₺</b></div>
+<div class="card stat">💳 المتبقي<b>24,700 ₺</b></div>
+</div>
+<div class="section">
+<h2>مواعيد اليوم</h2>
+<table class="table"><tr><th>الوقت</th><th>المريض</th><th>الدكتور</th><th>الحالة</th></tr>
+<tr><td>10:00</td><td>أحمد محمد</td><td>د. أحمد</td><td><span class="badge">حضر</span></td></tr>
+<tr><td>11:30</td><td>محمد علي</td><td>د. أحمد</td><td><span class="badge">محجوز</span></td></tr>
+<tr><td>13:00</td><td>سارة محمود</td><td>د. أحمد</td><td><span class="badge">محجوز</span></td></tr>
+</table>
+</div>
+</section>
+
+<section id="patients" class="patients">
+<div class="top"><h1>المرضى</h1><div class="actions"><button onclick="addPatient()">+ إضافة مريض</button></div></div>
+<input class="search" id="search" placeholder="ابحث بالاسم أو الهاتف أو رقم الملف" oninput="filterPatients()">
+<table class="table"><thead><tr><th>رقم الملف</th><th>الاسم</th><th>الهاتف</th><th>آخر زيارة</th><th>إجراء</th></tr></thead>
+<tbody id="patientRows">
+<tr><td>PAT-0001</td><td>أحمد محمد</td><td>05XXXXXXXX</td><td>27/08/2026</td><td class="actions"><button onclick="alert('ملف أحمد محمد')">فتح الملف</button></td></tr>
+<tr><td>PAT-0002</td><td>محمد علي</td><td>05XXXXXXXX</td><td>25/08/2026</td><td class="actions"><button onclick="alert('ملف محمد علي')">فتح الملف</button></td></tr>
+<tr><td>PAT-0003</td><td>سارة محمود</td><td>05XXXXXXXX</td><td>20/08/2026</td><td class="actions"><button onclick="alert('ملف سارة محمود')">فتح الملف</button></td></tr>
+</tbody></table>
+</section>
+</main></div>
+<script>
+function show(id,btn){document.getElementById('dashboard').style.display=id==='dashboard'?'block':'none';document.getElementById('patients').style.display=id==='patients'?'block':'none';document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('active'));btn.classList.add('active')}
+function addPatient(){let name=prompt('اسم المريض:');if(!name)return;let phone=prompt('رقم الهاتف:')||'';let n=document.querySelectorAll('#patientRows tr').length+1;document.getElementById('patientRows').insertAdjacentHTML('beforeend',`<tr><td>PAT-${String(n).padStart(4,'0')}</td><td>${name}</td><td>${phone}</td><td>—</td><td class="actions"><button>فتح الملف</button></td></tr>`)}
+function filterPatients(){let q=document.getElementById('search').value.toLowerCase();document.querySelectorAll('#patientRows tr').forEach(r=>r.style.display=r.innerText.toLowerCase().includes(q)?'':'none')}
+</script>
+</body>
+</html>
